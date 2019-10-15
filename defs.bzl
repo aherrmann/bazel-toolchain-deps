@@ -1,14 +1,10 @@
-InnerInfo = provider(
-    fields = ["execution", "target"],
-)
+InnerInfo = provider(fields = ["execution", "target"])
 
 def _inner_toolchain_impl(ctx):
-    return [platform_common.ToolchainInfo(
-        info = InnerInfo(
-            execution = ctx.attr.execution,
-            target = ctx.attr.target,
-        ),
-    )]
+    return [platform_common.ToolchainInfo(info = InnerInfo(
+        execution = ctx.attr.execution,
+        target = ctx.attr.target,
+    ))]
 
 inner_toolchain = rule(
     _inner_toolchain_impl,
@@ -18,18 +14,14 @@ inner_toolchain = rule(
     },
 )
 
-OuterInfo = provider(
-    fields = ["inner", "execution", "target"],
-)
+OuterInfo = provider(fields = ["inner", "execution", "target"])
 
 def _outer_toolchain_impl(ctx):
-    return [platform_common.ToolchainInfo(
-        info = OuterInfo(
-            inner = ctx.toolchains["//:inner_toolchain_type"],
-            execution = ctx.attr.execution,
-            target = ctx.attr.target,
-        ),
-    )]
+    return [platform_common.ToolchainInfo(info = OuterInfo(
+        inner = ctx.toolchains["//:inner_toolchain_type"],
+        execution = ctx.attr.execution,
+        target = ctx.attr.target,
+    ))]
 
 outer_toolchain = rule(
     _outer_toolchain_impl,

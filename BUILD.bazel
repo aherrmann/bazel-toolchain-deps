@@ -11,15 +11,11 @@ constraint_value(
 )
 platform(
     name = "red_platform",
-    constraint_values = [
-        ":red",
-    ],
+    constraint_values = [":red"],
 )
 platform(
     name = "green_platform",
-    constraint_values = [
-        ":green",
-    ],
+    constraint_values = [":green"],
 )
 
 toolchain_type(name = "inner_toolchain_type")
