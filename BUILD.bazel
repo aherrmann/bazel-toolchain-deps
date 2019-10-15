@@ -2,59 +2,59 @@ load("//:defs.bzl", "inner_toolchain", "outer_toolchain", "consumer")
 
 constraint_setting(name = "color")
 constraint_value(
-    name = "red",
+    name = "execution",
     constraint_setting = ":color",
 )
 constraint_value(
-    name = "green",
+    name = "target",
     constraint_setting = ":color",
 )
 platform(
-    name = "red_platform",
-    constraint_values = [":red"],
+    name = "execution_platform",
+    constraint_values = [":execution"],
 )
 platform(
-    name = "green_platform",
-    constraint_values = [":green"],
+    name = "target_platform",
+    constraint_values = [":target"],
 )
 
 toolchain_type(name = "inner_toolchain_type")
 inner_toolchain(
-    name = "inner_red_red",
-    execution = "red",
-    target = "red",
+    name = "inner_execution_execution",
+    execution = "execution",
+    target = "execution",
 )
 toolchain(
-    name = "inner_red_red_toolchain",
-    exec_compatible_with = [":red"],
-    target_compatible_with = [":red"],
-    toolchain = ":inner_red_red",
+    name = "inner_execution_execution_toolchain",
+    exec_compatible_with = [":execution"],
+    target_compatible_with = [":execution"],
+    toolchain = ":inner_execution_execution",
     toolchain_type = ":inner_toolchain_type",
 )
 inner_toolchain(
-    name = "inner_red_green",
-    execution = "red",
-    target = "green",
+    name = "inner_execution_target",
+    execution = "execution",
+    target = "target",
 )
 toolchain(
-    name = "inner_red_green_toolchain",
-    exec_compatible_with = [":red"],
-    target_compatible_with = [":green"],
-    toolchain = ":inner_red_green",
+    name = "inner_execution_target_toolchain",
+    exec_compatible_with = [":execution"],
+    target_compatible_with = [":target"],
+    toolchain = ":inner_execution_target",
     toolchain_type = ":inner_toolchain_type",
 )
 
 toolchain_type(name = "outer_toolchain_type")
 outer_toolchain(
-    name = "outer_red_green",
-    execution = "red",
-    target = "green",
+    name = "outer_execution_target",
+    execution = "execution",
+    target = "target",
 )
 toolchain(
-    name = "outer_red_green_toolchain",
-    exec_compatible_with = [":red"],
-    target_compatible_with = [":green"],
-    toolchain = ":outer_red_green",
+    name = "outer_execution_target_toolchain",
+    exec_compatible_with = [":execution"],
+    target_compatible_with = [":target"],
+    toolchain = ":outer_execution_target",
     toolchain_type = ":outer_toolchain_type",
 )
 
