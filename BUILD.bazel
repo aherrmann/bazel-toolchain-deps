@@ -1,0 +1,65 @@
+load("//:defs.bzl", "inner_toolchain", "outer_toolchain", "consumer")
+
+constraint_setting(name = "color")
+constraint_value(
+    name = "red",
+    constraint_setting = ":color",
+)
+constraint_value(
+    name = "green",
+    constraint_setting = ":color",
+)
+platform(
+    name = "red_platform",
+    constraint_values = [
+        ":red",
+    ],
+)
+platform(
+    name = "green_platform",
+    constraint_values = [
+        ":green",
+    ],
+)
+
+toolchain_type(name = "inner_toolchain_type")
+inner_toolchain(
+    name = "inner_red_red",
+    execution = "red",
+    target = "red",
+)
+toolchain(
+    name = "inner_red_red_toolchain",
+    exec_compatible_with = [":red"],
+    target_compatible_with = [":red"],
+    toolchain = ":inner_red_red",
+    toolchain_type = ":inner_toolchain_type",
+)
+inner_toolchain(
+    name = "inner_red_green",
+    execution = "red",
+    target = "green",
+)
+toolchain(
+    name = "inner_red_green_toolchain",
+    exec_compatible_with = [":red"],
+    target_compatible_with = [":green"],
+    toolchain = ":inner_red_green",
+    toolchain_type = ":inner_toolchain_type",
+)
+
+toolchain_type(name = "outer_toolchain_type")
+outer_toolchain(
+    name = "outer_red_green",
+    execution = "red",
+    target = "green",
+)
+toolchain(
+    name = "outer_red_green_toolchain",
+    exec_compatible_with = [":red"],
+    target_compatible_with = [":green"],
+    toolchain = ":outer_red_green",
+    toolchain_type = ":outer_toolchain_type",
+)
+
+consumer(name = "consumer")
