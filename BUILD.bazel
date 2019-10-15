@@ -1,13 +1,13 @@
 load("//:defs.bzl", "inner_toolchain", "outer_toolchain", "consumer")
 
-constraint_setting(name = "color")
+constraint_setting(name = "platform")
 constraint_value(
     name = "execution",
-    constraint_setting = ":color",
+    constraint_setting = ":platform",
 )
 constraint_value(
     name = "target",
-    constraint_setting = ":color",
+    constraint_setting = ":platform",
 )
 platform(
     name = "execution_platform",
