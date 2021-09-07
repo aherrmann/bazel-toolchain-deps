@@ -1,0 +1,12 @@
+load("//cc:defs.bzl", "cc_binary")
+load("//haskell:defs.bzl", "haskell_binary")
+
+cc_binary(
+    name = "cc",
+    message = "Hello from C",
+)
+
+haskell_binary(
+    name = "hs",
+    message = "Hello from Haskell",
+)

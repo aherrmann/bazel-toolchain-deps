@@ -1,0 +1,57 @@
+load("defs.bzl", "cc_compiler", "cc_toolchain")
+
+cc_compiler(
+    name = "cc_linux_x86_64",
+    exec_cpu = "x86_64",
+    exec_os = "linux",
+    target_cpu = "x86_64",
+    target_os = "linux",
+)
+
+cc_compiler(
+    name = "cc_linux_x86_64_cross_arm",
+    exec_cpu = "x86_64",
+    exec_os = "linux",
+    target_cpu = "arm",
+    target_os = "linux",
+)
+
+cc_toolchain(
+    name = "cc_linux_x86_64_toolchain",
+    compiler = ":cc_linux_x86_64",
+)
+
+cc_toolchain(
+    name = "cc_linux_x86_64_cross_arm_toolchain",
+    compiler = ":cc_linux_x86_64_cross_arm",
+)
+
+toolchain_type(name = "toolchain_type")
+
+toolchain(
+    name = "linux_x86_64",
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    toolchain = ":cc_linux_x86_64_toolchain",
+    toolchain_type = ":toolchain_type",
+)
+
+toolchain(
+    name = "linux_x86_64_cross_arm",
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:arm",
+    ],
+    toolchain = ":cc_linux_x86_64_cross_arm_toolchain",
+    toolchain_type = ":toolchain_type",
+)
